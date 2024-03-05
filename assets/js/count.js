@@ -15,7 +15,7 @@ const warning = document.getElementById("warning");
 
 let asciiData;
 
-fetch("../../assets/json/ascii.json")
+fetch("assets/json/ascii.json")
   .then((response) => response.json())
   .then((data) => {
     asciiData = data;
