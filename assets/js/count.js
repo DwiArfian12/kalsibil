@@ -93,7 +93,8 @@ function convert() {
   } else {
     switch (pil) {
       case "biner":
-        if (input.value == 1 || input.value == 0) {
+        const binerRegex = /^[01]+$/;
+        if (binerRegex.test(input.value)) {
           hasil = fromBiner(input.value);
           outputoktal.value = hasil.oktal;
           outputdesimal.value = hasil.desimal;
@@ -104,7 +105,8 @@ function convert() {
         }
         break;
       case "oktal":
-        if (input.value >= 0 || input.value < 8) {
+        const oktalRegex = /^[0-7]+$/;
+        if (oktalRegex.test(input.value)) {
           hasil = fromOktal(input.value);
           hasilbiner = addLeadingZeros(hasil.biner);
           outputbiner.value = hasilbiner;
@@ -116,7 +118,8 @@ function convert() {
         }
         break;
       case "desimal":
-        if (input.value >= 0 || input.value < 10) {
+        const desimalRegex = /^\d+$/;
+        if (desimalRegex.test(input.value)) {
           hasil = fromDesimal(input.value);
           hasilbiner = addLeadingZeros(hasil.biner);
           outputbiner.value = hasilbiner;
@@ -128,16 +131,8 @@ function convert() {
         }
         break;
       case "heksa":
-        if (
-          input.value >= 0 ||
-          input.value < 10 ||
-          input.value == "A" ||
-          input.value == "B" ||
-          input.value == "C" ||
-          input.value == "D" ||
-          input.value == "E" ||
-          input.value == "F"
-        ) {
+        const heksaRegex = /^[0-9A-Fa-f]+$/;
+        if (heksaRegex.test(input.value)) {
           hasil = fromHeksa(input.value);
           hasilbiner = addLeadingZeros(hasil.biner);
           outputbiner.value = hasilbiner;
@@ -227,7 +222,7 @@ function fromASCII(value) {
       result.biner = item.decimal.toString(2);
       result.oktal = item.decimal.toString(8);
       result.desimal = item.decimal;
-      result.heksa = item.hexa;
+      result.heksa = item.hexa.toString();
     }
   });
   return result;
