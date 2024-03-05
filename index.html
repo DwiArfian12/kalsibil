@@ -4,16 +4,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <title>Kalsibil | FianDev</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    <link href="assets/img/icon.png" rel="icon">
-    <link href="assets/img/icon.png" rel="apple-touch-icon">
+    <link rel="shortcut icon" href="/assets/img/icon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
   </head>
@@ -84,7 +80,7 @@
         <div class="container">
           <div class="section-title">
             <h2>Kalkulator Konversi Bilangan</h2>
-            <p>Ketikkan angka yang ingin Anda konversikan di dalam kolom pertama. Hasil konversi akan tampil pada kolom di bawahnya.</p>
+            <p id="test">Ketikkan angka yang ingin Anda konversikan di dalam kolom pertama. Hasil konversi akan tampil pada kolom di bawahnya.</p>
           </div>
           <div class="row">
             <div class="col-lg mt-5 mt-lg-0 d-flex align-items-stretch">
@@ -93,38 +89,47 @@
                   <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih input</button>
                   <ul class="dropdown-menu dropdown-menu-dark">
                     <li>
-                      <a class="dropdown-item" href="#calc" onclick="pilBiner()" id="pilBiner">Biner</a>
+                      <a class="dropdown-item" href="#calc" onclick="pilihan('biner')" id="pilBiner">Biner</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#calc" onclick="pilOktal()" id="pilOktal">Oktal</a>
+                      <a class="dropdown-item" href="#calc" onclick="pilihan('oktal')" id="pilOktal">Oktal</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#calc" onclick="pilDesimal()" id="pilDesimal">Desimal</a>
+                      <a class="dropdown-item" href="#calc" onclick="pilihan('desimal')" id="pilDesimal">Desimal</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#calc" onclick="pilHeksadesimal()" id="pilHeksadesimal">Heksadesimal</a>
+                      <a class="dropdown-item" href="#calc" onclick="pilihan('heksa')" id="pilHeksadesimal">Heksadesimal</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#calc" onclick="pilihan('ascii')" id="pilASC">ASCII</a>
                     </li>
                   </ul>
                 </div>
                 <div class="form-group mt-3">
-                  <label for="name" id="lbl1">Biner</label>
-                  <input type="text" class="form-control" name="input" id="input" required placeholder="0">
+                  <label for="name" id="lblinput">Biner</label>
+                  <input type="text" class="form-control" onkeyup="convert()" name="input" id="input" required placeholder="0">
+                  <p class="text text-danger mt-1" id="warning"></p>
                 </div>
                 <h5 class="mt-4">Output :</h5>
-                <div class="form-group mt-3">
-                  <label for="name" id="lbl2">Oktal</label>
-                  <input type="text" class="form-control" name="output1" id="output1" disabled="disabled" value="0">
+                <div class="form-group mt-3" id="divbiner">
+                  <label for="name" id="lblbiner">Biner</label>
+                  <input type="text" class="form-control" name="outputbiner" id="outputbiner" disabled="disabled" value="0">
                 </div>
-                <div class="form-group mt-3">
-                  <label for="name" id="lbl3">Desimal</label>
-                  <input type="text" class="form-control" name="output2" id="output2" disabled="disabled" value="0">
+                <div class="form-group mt-3" id="divoktal">
+                  <label for="name" id="lbloktal">Oktal</label>
+                  <input type="text" class="form-control" name="outputoktal" id="outputoktal" disabled="disabled" value="0">
                 </div>
-                <div class="form-group mt-3">
-                  <label for="name" id="lbl4">Heksadesimal</label>
-                  <input type="text" class="form-control" name="output3" id="output3" disabled="disabled" value="0">
+                <div class="form-group mt-3" id="divdesimal" id="for-asc">
+                  <label for="name" id="lbldesimal">Desimal</label>
+                  <input type="text" class="form-control" name="output2" id="outputdesimal" disabled="disabled" value="0">
                 </div>
-                <div class="text-center mt-2">
-                  <button type="submit" style="width: 100%; margin-top: 10px;" onclick="convert()">Konversi!</button>
+                <div class="form-group mt-3" id="divheksa">
+                  <label for="name" id="lblheksa">Heksadesimal</label>
+                  <input type="text" class="form-control" name="outputheksa" id="outputheksa" disabled="disabled" value="0">
+                </div>
+                <div class="form-group mt-3" id="divascii">
+                  <label for="name" id="lblascii">ASCII</label>
+                  <input type="text" class="form-control" name="outputascii" id="outputascii" disabled="disabled" value="0">
                 </div>
               </div>
             </div>
@@ -161,9 +166,8 @@
       <i class="bi bi-arrow-up-short"></i>
     </a>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/count.js"></script>
   </body>
 </html>
